@@ -16,4 +16,8 @@ public class ArticleService {
 		return articleDAO.getArticles();
 	}
 
+	public Article getArticle(int id) {
+		return articleDAO.getArticle(id);	
+	}
+
 }

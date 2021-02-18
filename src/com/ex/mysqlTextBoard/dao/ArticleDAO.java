@@ -36,36 +36,36 @@ public class ArticleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+
 			String sql = "SELECT * FROM article ORDER BY id DESC";
 
 			try {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();
-				
-				while(rs.next()) {
+
+				while (rs.next()) {
 //				System.out.println(rs.getObject("id"));
 //				int id = (int)(long)rs.getObject("id");
-				int id = rs.getInt("id");
-				String regDate = rs.getString("regDate");
-				String updateDate = rs.getString("updateDate");
-				String title = rs.getString("title");
-				String body = rs.getString("body");
-				int memberId = rs.getInt("memberId");
-				int boardId = rs.getInt("boardId");
-				
-				Article article = new Article(id, regDate, updateDate, title, body, memberId, boardId);
-		
+					int id = rs.getInt("id");
+					String regDate = rs.getString("regDate");
+					String updateDate = rs.getString("updateDate");
+					String title = rs.getString("title");
+					String body = rs.getString("body");
+					int memberId = rs.getInt("memberId");
+					int boardId = rs.getInt("boardId");
+
+					Article article = new Article(id, regDate, updateDate, title, body, memberId, boardId);
+
 //				System.out.println(id);
 //				System.out.println(article);
-				articles.add(article);
+					articles.add(article);
 				}
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-					
+
 		} finally {
 
 			try {
@@ -80,36 +80,99 @@ public class ArticleDAO {
 		return articles;
 	}
 
-	private List<Article> getFakeArticles() {
-		List<Article> articles = new ArrayList<>();
-		
-		Article article;
-		
-		// 첫번째 가짜 게시물 만들기
-//		article = new Article();
-//		article.id = 1;
-//		article.regDate = "2021-02-18 18:22:22";
-//		article.updateDate = "2021-02-18 18:22:22";
-//		article.title = "제목1";
-//		article.body = "내용1";
-//		article.memberId = 1;
-//		article.boardId = 1;
-		article = new Article(1, "2021-02-18 18:22:22", "2021-02-18 18:22:22","제목1", "내용1",1,1);
-		articles.add(article);
+//	private List<Article> getFakeArticles() {
+//		List<Article> articles = new ArrayList<>();
+//		
+//		Article article;
+//		
+//		// 첫번째 가짜 게시물 만들기
+////		article = new Article();
+////		article.id = 1;
+////		article.regDate = "2021-02-18 18:22:22";
+////		article.updateDate = "2021-02-18 18:22:22";
+////		article.title = "제목1";
+////		article.body = "내용1";
+////		article.memberId = 1;
+////		article.boardId = 1;
+//		article = new Article(1, "2021-02-18 18:22:22", "2021-02-18 18:22:22","제목1", "내용1",1,1);
+//		articles.add(article);
+//
+//		// 두번째 가짜 게시물 만들기
+////		article = new Article();
+////		article.id = 2;
+////		article.regDate = "2021-02-18 18:22:23";
+////		article.updateDate = "2021-02-18 18:22:23";
+////		article.title = "제목1";
+////		article.body = "내용1";
+////		article.memberId = 1;
+////		article.boardId = 1;
+//
+//		article = new Article(2,"2021-02-18 18:22:23", "2021-02-18 18:22:23","제목2", "내용2",1,1);		
+//		articles.add(article);
+//		return articles;
+//	}
 
-		// 두번째 가짜 게시물 만들기
-//		article = new Article();
-//		article.id = 2;
-//		article.regDate = "2021-02-18 18:22:23";
-//		article.updateDate = "2021-02-18 18:22:23";
-//		article.title = "제목1";
-//		article.body = "내용1";
-//		article.memberId = 1;
-//		article.boardId = 1;
+	public Article getArticle(int id) {
+		Article article = null;
+		Connection con = null;
 
-		article = new Article(2,"2021-02-18 18:22:23", "2021-02-18 18:22:23","제목2", "내용2",1,1);		
-		articles.add(article);
-		return articles;
+		try {
+			String dbmsJdbcUrl = "jdbc:mysql://192.168.200.102:3306/textBoard?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull&connectTimeout=60000&socketTimeout=60000";
+			String dbmsLoginId = "gokuma";
+			String dbmsLoginPw = "gokuma123";
+
+			// MySQL 드라이버 등록
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			// 연결 생성
+			// finally는 무조건 실행됨
+			try {
+				con = DriverManager.getConnection(dbmsJdbcUrl, dbmsLoginId, dbmsLoginPw);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			String sql = "SELECT * FROM article WHERE id = ?";
+
+			try {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+//				System.out.println(rs.getObject("id"));
+//				int id = (int)(long)rs.getObject("id");
+					int articleId = rs.getInt("id");
+					String regDate = rs.getString("regDate");
+					String updateDate = rs.getString("updateDate");
+					String title = rs.getString("title");
+					String body = rs.getString("body");
+					int memberId = rs.getInt("memberId");
+					int boardId = rs.getInt("boardId");
+
+					article = new Article(id, regDate, updateDate, title, body, memberId, boardId);
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return article;
 	}
 
 }
