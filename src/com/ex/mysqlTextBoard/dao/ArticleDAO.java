@@ -175,4 +175,54 @@ public class ArticleDAO {
 		return article;
 	}
 
+	public int delete(int id) {
+		int affectedRows = 0;
+		Connection con = null;
+
+		try {
+			String dbmsJdbcUrl = "jdbc:mysql://192.168.200.102:3306/textBoard?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull&connectTimeout=60000&socketTimeout=60000";
+			String dbmsLoginId = "gokuma";
+			String dbmsLoginPw = "gokuma123";
+
+			// MySQL 드라이버 등록
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			// 연결 생성
+			// finally는 무조건 실행됨
+			try {
+				con = DriverManager.getConnection(dbmsJdbcUrl, dbmsLoginId, dbmsLoginPw);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			String sql = "DELETE FROM article WHERE id = ?";
+
+			try {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, id);
+				affectedRows = pstmt.executeUpdate();
+
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		} finally {
+
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return affectedRows;
+	}
+
 }

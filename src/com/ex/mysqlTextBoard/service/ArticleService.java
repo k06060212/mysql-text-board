@@ -20,4 +20,9 @@ public class ArticleService {
 		return articleDAO.getArticle(id);	
 	}
 
+	public int delete(int id) {
+		return articleDAO.delete(id);
+		
+	}
+
 }
