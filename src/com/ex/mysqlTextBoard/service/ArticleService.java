@@ -25,4 +25,8 @@ public class ArticleService {
 		
 	}
 
+	public int write(int boardId, int memberId, String title, String body) {
+		return articleDAO.save(boardId, memberId, title, body);
+	}
+
 }
