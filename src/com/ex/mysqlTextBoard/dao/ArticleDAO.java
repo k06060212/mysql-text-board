@@ -53,15 +53,9 @@ public class ArticleDAO {
 				String body = rs.getString("body");
 				int memberId = rs.getInt("memberId");
 				int boardId = rs.getInt("boardId");
-				Article article = new Article();
-				article.id = id;
-				article.regDate = regDate;
-				article.updateDate = updateDate;
-				article.title = title;
-				article.body = body;
-				article.memberId = memberId;
-				article.boardId = boardId;
 				
+				Article article = new Article(id, regDate, updateDate, title, body, memberId, boardId);
+		
 //				System.out.println(id);
 //				System.out.println(article);
 				articles.add(article);
@@ -88,29 +82,32 @@ public class ArticleDAO {
 
 	private List<Article> getFakeArticles() {
 		List<Article> articles = new ArrayList<>();
+		
 		Article article;
+		
 		// 첫번째 가짜 게시물 만들기
-		article = new Article();
-		article.id = 1;
-		article.regDate = "2021-02-18 18:22:22";
-		article.updateDate = "2021-02-18 18:22:22";
-		article.title = "제목1";
-		article.body = "내용1";
-		article.memberId = 1;
-		article.boardId = 1;
-
+//		article = new Article();
+//		article.id = 1;
+//		article.regDate = "2021-02-18 18:22:22";
+//		article.updateDate = "2021-02-18 18:22:22";
+//		article.title = "제목1";
+//		article.body = "내용1";
+//		article.memberId = 1;
+//		article.boardId = 1;
+		article = new Article(1, "2021-02-18 18:22:22", "2021-02-18 18:22:22","제목1", "내용1",1,1);
 		articles.add(article);
 
 		// 두번째 가짜 게시물 만들기
-		article = new Article();
-		article.id = 2;
-		article.regDate = "2021-02-18 18:22:23";
-		article.updateDate = "2021-02-18 18:22:23";
-		article.title = "제목1";
-		article.body = "내용1";
-		article.memberId = 1;
-		article.boardId = 1;
+//		article = new Article();
+//		article.id = 2;
+//		article.regDate = "2021-02-18 18:22:23";
+//		article.updateDate = "2021-02-18 18:22:23";
+//		article.title = "제목1";
+//		article.body = "내용1";
+//		article.memberId = 1;
+//		article.boardId = 1;
 
+		article = new Article(2,"2021-02-18 18:22:23", "2021-02-18 18:22:23","제목2", "내용2",1,1);		
 		articles.add(article);
 		return articles;
 	}
