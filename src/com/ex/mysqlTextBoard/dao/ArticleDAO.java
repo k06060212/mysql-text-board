@@ -2,6 +2,7 @@ package com.ex.mysqlTextBoard.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,6 @@ public class ArticleDAO {
 		List<Article> articles = new ArrayList<>();
 
 		try {
-
 
 			String dbmsJdbcUrl = "jdbc:mysql://192.168.200.102:3306/textBoard?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull&connectTimeout=60000&socketTimeout=60000";
 			String dbmsLoginId = "gokuma";
@@ -35,7 +35,19 @@ public class ArticleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			
+			String sql = "UPDATE article";
+					sql += " SET updateDate = NOW()";
+					sql += " WHERE id = 3;";
 
+			try {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+					
 		} finally {
 
 			try {
