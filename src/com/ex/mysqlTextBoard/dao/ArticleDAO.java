@@ -37,13 +37,13 @@ public class ArticleDAO {
 				e.printStackTrace();
 			}
 			
-			String sql = "SELECT * FROM article LIMIT 2";
+			String sql = "SELECT * FROM article ORDER BY id DESC";
 
 			try {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();
 				
-				rs.next();
+				while(rs.next()) {
 //				System.out.println(rs.getObject("id"));
 //				int id = (int)(long)rs.getObject("id");
 				int id = rs.getInt("id");
@@ -65,6 +65,7 @@ public class ArticleDAO {
 //				System.out.println(id);
 //				System.out.println(article);
 				articles.add(article);
+				}
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
