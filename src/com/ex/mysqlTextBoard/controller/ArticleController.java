@@ -5,13 +5,17 @@ import java.util.Scanner;
 
 import com.ex.mysqlTextBoard.Container;
 import com.ex.mysqlTextBoard.dto.Article;
+import com.ex.mysqlTextBoard.dto.Member;
 import com.ex.mysqlTextBoard.service.ArticleService;
+import com.ex.mysqlTextBoard.service.MemberService;
 
 public class ArticleController {
 	private ArticleService articleService;
+	private MemberService memberService;
 
 	public ArticleController() {
 		articleService = new ArticleService();
+		memberService = new MemberService();
 	}
 
 	public void doCommand(String cmd) {
@@ -67,10 +71,13 @@ public class ArticleController {
 		articleService = new ArticleService();
 
 		System.out.println("번호 / 작성 / 수정 / 작성자 / 제목");
-
+		
 		for (Article article : articles) {
+			Member member = memberService.getMemberById(article.memberId);
+			String writer = member.name;
+			
 			System.out.printf("%d / %s / %s / %s / %s\n", article.id, article.regDate, article.updateDate,
-					article.memberId, article.title);
+					writer, article.title);
 		}
 
 		System.out.println(articles);

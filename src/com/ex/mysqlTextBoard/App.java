@@ -7,13 +7,12 @@ import com.ex.mysqlTextBoard.controller.MemberController;
 import com.ex.mysqlutil.mysqlutil.MysqlUtil;
 
 public class App {
-
 	public void run() {
 		Scanner sc = Container.scanner;
 		
 		ArticleController articleController = new ArticleController();
 		MemberController memberController = new MemberController();
-		
+
 		while (true) {
 			System.out.printf("명령어) ");
 			String cmd = sc.nextLine();
@@ -40,7 +39,5 @@ public class App {
 				break;
 			}
 		}
-		
 	}
-
 }
