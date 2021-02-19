@@ -26,7 +26,7 @@ public class ArticleService {
 	}
 
 	public int write(int boardId, int memberId, String title, String body) {
-		return articleDAO.save(boardId, memberId, title, body);
+		return articleDAO.write(boardId, memberId, title, body);
 	}
 
 	public int modify(int id, String title, String body) {

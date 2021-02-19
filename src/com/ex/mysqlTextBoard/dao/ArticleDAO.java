@@ -228,7 +228,7 @@ public class ArticleDAO {
 		return affectedRows;
 	}
 
-	public int save(int boardId, int memberId, String title, String body) {
+	public int write(int boardId, int memberId, String title, String body) {
 		int id = 0;
 		Connection con = null;
 

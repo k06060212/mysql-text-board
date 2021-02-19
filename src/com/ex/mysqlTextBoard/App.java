@@ -3,6 +3,7 @@ package com.ex.mysqlTextBoard;
 import java.util.Scanner;
 
 import com.ex.mysqlTextBoard.controller.ArticleController;
+import com.ex.mysqlTextBoard.controller.MemberController;
 import com.ex.mysqlutil.mysqlutil.MysqlUtil;
 
 public class App {
@@ -11,6 +12,7 @@ public class App {
 		Scanner sc = Container.scanner;
 		
 		ArticleController articleController = new ArticleController();
+		MemberController memberController = new MemberController();
 		
 		while (true) {
 			System.out.printf("명령어) ");
@@ -23,6 +25,9 @@ public class App {
 			
 			if(cmd.startsWith("article")) {
 				articleController.doCommand(cmd);
+				
+			}else if(cmd.startsWith("member")) {
+				memberController.doCommand(cmd);
 				
 			}else if(cmd.equals("system exit")) {
 				System.out.println("==시스템 종료==");
