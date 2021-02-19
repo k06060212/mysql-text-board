@@ -1,5 +1,7 @@
 package com.ex.mysqlTextBoard.dto;
 
+import java.util.Map;
+
 public class Article {
 	public int id;
 	public String regDate;

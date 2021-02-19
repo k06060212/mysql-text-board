@@ -29,4 +29,8 @@ public class ArticleService {
 		return articleDAO.save(boardId, memberId, title, body);
 	}
 
+	public int modify(int id, String title, String body) {
+		return articleDAO.modify(id, title, body);
+	}
+
 }

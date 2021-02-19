@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ex.mysqlTextBoard.dto.Article;
+import com.ex.mysqlutil.mysqlutil.MysqlUtil;
+import com.ex.mysqlutil.mysqlutil.SecSql;
 
 public class ArticleDAO {
 
@@ -286,6 +288,18 @@ public class ArticleDAO {
 		}
 		
 		return id;
+	}
+
+	public int modify(int id, String title, String body) {
+		SecSql sql = new SecSql();
+		
+		sql.append("UPDATE article");
+		sql.append(" SET updateDate = NOW()");
+		sql.append(", title = ?", title);
+		sql.append(", body = ?", body);
+		sql.append("Where id = ?", id);
+		
+		return MysqlUtil.update(sql);
 	}
 
 }

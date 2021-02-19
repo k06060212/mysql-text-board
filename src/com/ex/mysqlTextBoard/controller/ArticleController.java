@@ -19,11 +19,44 @@ public class ArticleController {
 			showList(cmd);
 		} else if (cmd.startsWith("article detail")) {
 			showDetail(cmd); // 보여주는 것은 show로
+		} else if (cmd.startsWith("article modify")) {
+			doModify(cmd); // 보여주는 것은 show로
 		} else if (cmd.startsWith("article delete")) {
 			doDelete(cmd); // 처리하는 것은 do로 하는 것이 관례
 		} else if (cmd.startsWith("article write")) {
 			doWrite(cmd);
 		}
+	}
+
+	private void doModify(String cmd) {
+		System.out.println("==게시물 수정==");
+
+		int inputedId = Integer.parseInt(cmd.split(" ")[2]);
+
+		Article article = articleService.getArticle(inputedId);
+
+		if (article == null) {
+			System.out.println("존재하지 않는 게시물 입니다.");
+			return;
+		}
+
+		System.out.printf("번호 : %d\n", article.id);
+		System.out.printf("작성날짜 : %s\n", article.regDate);
+		System.out.printf("작성자 : %s\n", article.memberId);
+		
+		Scanner sc = Container.scanner;
+
+		System.out.printf("제목 : ");
+		String title = sc.nextLine();
+
+		System.out.printf("내용 :");
+		String body = sc.nextLine();
+		
+		articleService.modify(inputedId, title, body);
+
+		System.out.printf("%d번 게시물을 생성하였습니다.\n", inputedId);
+	
+
 	}
 
 	// 게시물 리스트
@@ -88,18 +121,18 @@ public class ArticleController {
 		System.out.println("==게시물 작성==");
 
 		Scanner sc = Container.scanner;
-		
+
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
-				
+
 		System.out.printf("내용 :");
 		String body = sc.nextLine();
-		
-		int memberId = 1; 	// 임시 1
-		int boardId = 1; 	// 임시 1
-		
+
+		int memberId = 1; // 임시 1
+		int boardId = 1; // 임시 1
+
 		int id = articleService.write(boardId, memberId, title, body);
-		
+
 		System.out.printf("%d번 게시물을 생성하였습니다.\n", id);
 
 	}
